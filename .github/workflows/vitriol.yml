@@ -33,6 +33,8 @@ jobs:
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: |
             ${{ runner.os }}-cargo-
+      - name: Setup
+        run: mise run setup
 
       - name: Format Check
         run: mise run fmt -- --check
@@ -54,6 +56,8 @@ jobs:
       - name: Install mise
         uses: jdx/mise-action@v4
 
+      - name: Setup
+        run: mise run setup
+
       - name: Check Conventional Commits
-        # Checks all commits in the PR or the latest push
-        run: mise exec -- cog check --from-latest-tag
+        run: mise exec -- cog check -i
